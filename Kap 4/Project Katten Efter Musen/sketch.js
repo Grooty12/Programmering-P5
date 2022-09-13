@@ -36,22 +36,6 @@ let imgCat2Inverted;
 let imgCat2X = 800/5.5;
 let imgCat2Y = 800/5.5;
 
-let Cat3X;
-let Cat3Y;
-let Cat3SpeedX;
-let Cat3SpeedY;
-let Cat3HBX;
-let Cat3HBY;
-let Cat3HBR;
-let imgCat3;
-let imgCat3X = 1898 / 24;
-let imgCat3Y = 3458 / 24;
-
-let RX;
-let RY;
-let Rlen;
-let eX;
-let eY;
 let soundYouDied;
 
 function preload() {
@@ -61,46 +45,38 @@ function preload() {
   imgCat1Inverted = loadImage('Assets/Cat1Inverted.png');
   imgCat2 = loadImage('Assets/Cat2.png');
   imgCat2Inverted = loadImage('Assets/Cat2Inverted.png');
-  imgCat3 = loadImage('Assets/Cat3.png');
   soundYouDied = loadSound('Assets/YouDied.mp3');
 }
 
 function setup() {
-  createCanvas(1200, 600);
+  createCanvas(1500, 700);
   Speed = 7.5;
   MX = random(MR,width-MR);
   MY = random(MR,height-MR);
 
-  Cat1X = width / 2;
-  Cat1Y = height / 2;
+  Cat1X = random(imgCat1X,width-imgCat1X);
+  Cat1Y = random(imgCat1Y,height-imgCat1Y);
   Cat1HBR = imgCat1Y / 2;
 
-  Cat2X = width / 2;
-  Cat2Y = height / 2;
+  Cat2X = random(imgCat2X, width-imgCat2X);
+  Cat2Y = random(imgCat2Y, height-imgCat2Y);
   Cat2HBR = imgCat2X / 2;
-
-  Cat3X = width/2;
-  Cat3Y = height/2;
-  Cat3HBR = imgCat3X / 2;
-  Cat1SpeedX = 1;
-  Cat1SpeedY = 1;
-  Cat2SpeedX = 1;
-  Cat2SpeedY = 1;
-  Cat3SpeedX = 1;
-  Cat3SpeedY = 1;
 }
 
 function draw() {
   background(50);
-
-  /*
+  HBMX = MX+45;
+  HBMY = MY+HBMR;
+  Cat1HBX = Cat1X + (imgCat1X / 2);
+  Cat1HBY = Cat1Y + (imgCat1Y / 2);
+  Cat2HBX = Cat2X + (imgCat2X / 2);
+  Cat2HBY = Cat2Y + (imgCat2Y / 2);
+  
   Cat1SpeedX = (4/sqrt((HBMX-Cat1HBX)**2+(HBMY-Cat1HBY)**2)) * (HBMX-Cat1HBX);
   Cat1SpeedY = (4/sqrt((HBMX-Cat1HBX)**2+(HBMY-Cat1HBY)**2)) * (HBMY-Cat1HBY);
-  Cat2SpeedX = (4/sqrt((HBMX-Cat2HBX)**2+(HBMY-Cat2HBY)**2)) * (HBMX-Cat2HBX);
-  Cat2SpeedY = (4/sqrt((HBMX-Cat2HBX)**2+(HBMY-Cat2HBY)**2)) * (HBMY-Cat2HBY);
-  Cat3SpeedX = (4/sqrt((HBMX-Cat3HBX)**2+(HBMY-Cat3HBY)**2)) * (HBMX-Cat3HBX);
-  Cat3SpeedY = (4/sqrt((HBMX-Cat3HBX)**2+(HBMY-Cat3HBY)**2)) * (HBMY-Cat3HBY);
- */
+  Cat2SpeedX = (3/sqrt((HBMX-Cat2HBX)**2+(HBMY-Cat2HBY)**2)) * (HBMX-Cat2HBX);
+  Cat2SpeedY = (3/sqrt((HBMX-Cat2HBX)**2+(HBMY-Cat2HBY)**2)) * (HBMY-Cat2HBY);
+  
   if (keyIsDown(87) && MY > 0) { // W
     MY -= Speed;
   }
@@ -127,41 +103,21 @@ function draw() {
   if (Cat2Y < 0 || Cat2Y > height-imgCat2Y) {
     Cat2SpeedY *= -1;
   }
-  if (Cat3X < 0 || Cat3X > width-imgCat3X) {
-    Cat3SpeedX *= -1;
-  }
-  if (Cat3Y < 0 || Cat3Y > height-imgCat3Y) {
-    Cat3SpeedY *= -1;
-  }
 
-  HBMX = MX+45;
-  HBMY = MY+HBMR;
-  Cat1HBX = Cat1X + (imgCat1X / 2);
-  Cat1HBY = Cat1Y + (imgCat1Y / 2);
-  Cat2HBX = Cat2X + (imgCat2X / 2);
-  Cat2HBY = Cat2Y + (imgCat2Y / 2);
-  Cat3HBX = Cat3X + (imgCat3X / 2);
-  Cat3HBY = Cat3Y + (imgCat3Y / 2);
+
+
   Cat1X += Cat1SpeedX;
   Cat1Y += Cat1SpeedY;
   Cat2X += Cat2SpeedX;
   Cat2Y += Cat2SpeedY; 
-  Cat3X += Cat3SpeedX;
-  Cat3Y += Cat3SpeedY;
 
-  if (sqrt((HBMX-Cat1HBX)**2+(HBMY-Cat1HBY)**2) < Cat1HBR+HBMR || sqrt((HBMX-Cat2HBX)**2+(HBMY-Cat2HBY)**2) < Cat2HBR+HBMR ||  sqrt((HBMX-Cat3HBX)**2+(HBMY-Cat3HBY)**2) < Cat3HBR+HBMR) {
-    Cat1X = width / 2;
-    Cat1Y = height / 2;
-    Cat1SpeedX = random(SpeedCat);
-    Cat1SpeedY = random(SpeedCat);
-    Cat2X = width / 2;
-    Cat2Y = height / 2;
-    Cat2SpeedX = random(SpeedCat);
-    Cat2SpeedY = random(SpeedCat);
-    Cat3X = width / 2;
-    Cat3Y = height / 2;
-    Cat3SpeedX = random(SpeedCat);
-    Cat3SpeedY = random(SpeedCat);
+
+  if (sqrt((HBMX-Cat1HBX)**2+(HBMY-Cat1HBY)**2) < Cat1HBR+HBMR || sqrt((HBMX-Cat2HBX)**2+(HBMY-Cat2HBY)**2) < Cat2HBR+HBMR) {
+    Cat1X = random(imgCat1X,width-imgCat1X);
+    Cat1Y = random(imgCat1Y,height-imgCat1Y); 
+    Cat2X = random(imgCat2X, width-imgCat2X);
+    Cat2Y = random(imgCat2Y, height-imgCat2Y);
+
     soundYouDied.play();
   }
   if (MRetning > 0) {
@@ -170,7 +126,16 @@ function draw() {
   if (MRetning < 0) {
     image(imgMouseInverted, MX, MY);
   }
-  image(imgCat1, Cat1X, Cat1Y, imgCat1X, imgCat1Y);
-  image(imgCat2, Cat2X, Cat2Y, imgCat2X, imgCat2Y);
-  image(imgCat3, Cat3X, Cat3Y, imgCat3X, imgCat3Y);
+  if (Cat1SpeedX > 0) {
+    image(imgCat1, Cat1X, Cat1Y, imgCat1X, imgCat1Y);
+  }
+  if (Cat1SpeedX < 0) {
+    image(imgCat1Inverted, Cat1X, Cat1Y, imgCat1X, imgCat1Y);
+  }
+  if (Cat2SpeedX > 0) {
+    image(imgCat2, Cat2X, Cat2Y, imgCat2X, imgCat2Y);
+  }
+  if (Cat2SpeedX < 0) {
+    image(imgCat2Inverted, Cat2X, Cat2Y, imgCat2X, imgCat2Y);
+  }
 }

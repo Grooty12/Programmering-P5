@@ -47,6 +47,11 @@ let imgCat3;
 let imgCat3X = 1898 / 24;
 let imgCat3Y = 3458 / 24;
 
+let RX;
+let RY;
+let Rlen;
+let eX;
+let eY;
 let soundYouDied;
 
 function preload() {
@@ -68,25 +73,34 @@ function setup() {
 
   Cat1X = width / 2;
   Cat1Y = height / 2;
-  Cat1SpeedX = random(SpeedCat);
-  Cat1SpeedY = random(SpeedCat);
   Cat1HBR = imgCat1Y / 2;
 
   Cat2X = width / 2;
   Cat2Y = height / 2;
-  Cat2SpeedX = random(SpeedCat);
-  Cat2SpeedY = random(SpeedCat);
   Cat2HBR = imgCat2X / 2;
 
   Cat3X = width/2;
   Cat3Y = height/2;
-  Cat3SpeedX = random(SpeedCat);
-  Cat3SpeedY = random(SpeedCat);
   Cat3HBR = imgCat3X / 2;
+  Cat1SpeedX = 1;
+  Cat1SpeedY = 1;
+  Cat2SpeedX = 1;
+  Cat2SpeedY = 1;
+  Cat3SpeedX = 1;
+  Cat3SpeedY = 1;
 }
 
 function draw() {
   background(50);
+
+  /*
+  Cat1SpeedX = (4/sqrt((HBMX-Cat1HBX)**2+(HBMY-Cat1HBY)**2)) * (HBMX-Cat1HBX);
+  Cat1SpeedY = (4/sqrt((HBMX-Cat1HBX)**2+(HBMY-Cat1HBY)**2)) * (HBMY-Cat1HBY);
+  Cat2SpeedX = (4/sqrt((HBMX-Cat2HBX)**2+(HBMY-Cat2HBY)**2)) * (HBMX-Cat2HBX);
+  Cat2SpeedY = (4/sqrt((HBMX-Cat2HBX)**2+(HBMY-Cat2HBY)**2)) * (HBMY-Cat2HBY);
+  Cat3SpeedX = (4/sqrt((HBMX-Cat3HBX)**2+(HBMY-Cat3HBY)**2)) * (HBMX-Cat3HBX);
+  Cat3SpeedY = (4/sqrt((HBMX-Cat3HBX)**2+(HBMY-Cat3HBY)**2)) * (HBMY-Cat3HBY);
+ */
   if (keyIsDown(87) && MY > 0) { // W
     MY -= Speed;
   }
@@ -156,17 +170,7 @@ function draw() {
   if (MRetning < 0) {
     image(imgMouseInverted, MX, MY);
   }
-  if (Cat1SpeedX > 0) {
-    image(imgCat1, Cat1X, Cat1Y, imgCat1X, imgCat1Y);
-  }
-  if (Cat1SpeedX < 0) {
-    image(imgCat1Inverted, Cat1X, Cat1Y, imgCat1X, imgCat1Y);
-  }
-  if (Cat2SpeedX > 0) {
-    image(imgCat2, Cat2X, Cat2Y, imgCat2X, imgCat2Y);
-  }
-  if (Cat2SpeedX < 0) {
-    image(imgCat2Inverted, Cat2X, Cat2Y, imgCat2X, imgCat2Y);
-  }
+  image(imgCat1, Cat1X, Cat1Y, imgCat1X, imgCat1Y);
+  image(imgCat2, Cat2X, Cat2Y, imgCat2X, imgCat2Y);
   image(imgCat3, Cat3X, Cat3Y, imgCat3X, imgCat3Y);
 }

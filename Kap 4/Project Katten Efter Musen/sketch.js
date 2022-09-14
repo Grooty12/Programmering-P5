@@ -47,6 +47,7 @@ let CheeseCounter;
 let imgCheese;
 let imgCheeseX = 650/15;
 let imgCheeseY = 572/15;
+let IsDead = 1;
 
 function preload() {
   imgMouse = loadImage('Assets/Mouse.png');
@@ -81,6 +82,8 @@ function setup() {
 }
 
 function draw() {
+  fill(250);
+  if (IsDead == 0) {
   background(100);
   HBMX = MX+45;
   HBMY = MY+HBMR;
@@ -129,8 +132,8 @@ function draw() {
     Cat1Y = random(imgCat1Y,height-imgCat1Y); 
     Cat2X = random(imgCat2X, width-imgCat2X);
     Cat2Y = random(imgCat2Y, height-imgCat2Y);
-    CheeseCounter = 0;
     CatSpeed = 1;
+    IsDead = 1;
     soundYouDied.play();
   }
   image(imgCheese, CX, CY, imgCheeseX, imgCheeseY);
@@ -151,5 +154,18 @@ function draw() {
   }
   if (Cat2SpeedX < 0) {
     image(imgCat2Inverted, Cat2X, Cat2Y, imgCat2X, imgCat2Y);
+  }
+  }
+  if (IsDead == 1) {
+    background(0);
+    textAlign(CENTER);
+    textSize(100);
+    text('Game Over',width/2,160);
+    textSize(25);
+    text('Score:', width/2-50,200);
+    text(CheeseCounter,width/2,200);
+    rect(width/2-200,250,400,50)
+    fill(0);
+    text('Restart',width/2,285);
   }
 }

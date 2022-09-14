@@ -47,7 +47,7 @@ let CheeseCounter;
 let imgCheese;
 let imgCheeseX = 650/15;
 let imgCheeseY = 572/15;
-let IsDead = 1;
+let IsDead = 0;
 
 function preload() {
   imgMouse = loadImage('Assets/Mouse.png');
@@ -84,78 +84,79 @@ function setup() {
 function draw() {
   fill(250);
   if (IsDead == 0) {
-  background(100);
-  HBMX = MX+45;
-  HBMY = MY+HBMR;
-  CHBX = CX + (imgCheeseX/2);
-  CHBY = CY + (imgCheeseY/2);
-  Cat1HBX = Cat1X + (imgCat1X / 2);
-  Cat1HBY = Cat1Y + (imgCat1Y / 2);
-  Cat2HBX = Cat2X + (imgCat2X / 2);
-  Cat2HBY = Cat2Y + (imgCat2Y / 2);
+    background(100);
+    HBMX = MX+45;
+    HBMY = MY+HBMR;
+    CHBX = CX + (imgCheeseX/2);
+    CHBY = CY + (imgCheeseY/2);
+    Cat1HBX = Cat1X + (imgCat1X / 2);
+    Cat1HBY = Cat1Y + (imgCat1Y / 2);
+    Cat2HBX = Cat2X + (imgCat2X / 2);
+   Cat2HBY = Cat2Y + (imgCat2Y / 2);
   
-  Cat1SpeedX = ((CatSpeed+1)/sqrt((HBMX-Cat1HBX)**2+(HBMY-Cat1HBY)**2)) * (HBMX-Cat1HBX);
-  Cat1SpeedY = ((CatSpeed+1)/sqrt((HBMX-Cat1HBX)**2+(HBMY-Cat1HBY)**2)) * (HBMY-Cat1HBY);
-  Cat2SpeedX = (CatSpeed/sqrt((HBMX-Cat2HBX)**2+(HBMY-Cat2HBY)**2)) * (HBMX-Cat2HBX);
-  Cat2SpeedY = (CatSpeed/sqrt((HBMX-Cat2HBX)**2+(HBMY-Cat2HBY)**2)) * (HBMY-Cat2HBY);
-  
-  if (keyIsDown(87) && MY > 0) { // W
-    MY -= Speed;
-  }
-  if (keyIsDown(83) && MY < height-95) { // S
-    MY += Speed;
-  }
-  if (keyIsDown(65) && MX > 0) { // A
-    MX -= Speed;
-    MRetning = -1;
-  }
-  if (keyIsDown(68) && MX < width-74) { // D
-    MX += Speed;
-    MRetning = 1; 
+    Cat1SpeedX = ((CatSpeed+1)/sqrt((HBMX-Cat1HBX)**2+(HBMY-Cat1HBY)**2)) * (HBMX-Cat1HBX);
+    Cat1SpeedY = ((CatSpeed+1)/sqrt((HBMX-Cat1HBX)**2+(HBMY-Cat1HBY)**2)) * (HBMY-Cat1HBY);
+    Cat2SpeedX = (CatSpeed/sqrt((HBMX-Cat2HBX)**2+(HBMY-Cat2HBY)**2)) * (HBMX-Cat2HBX);
+    Cat2SpeedY = (CatSpeed/sqrt((HBMX-Cat2HBX)**2+(HBMY-Cat2HBY)**2)) * (HBMY-Cat2HBY);
+    
+    if (keyIsDown(87) && MY > 0) { // W
+     MY -= Speed;
+    }
+    if (keyIsDown(83) && MY < height-95) { // S
+      MY += Speed;
+    }
+    if (keyIsDown(65) && MX > 0) { // A
+      MX -= Speed;
+      MRetning = -1;
+    }
+    if (keyIsDown(68) && MX < width-74) { // D
+      MX += Speed;
+      MRetning = 1; 
+    }
+
+   if (sqrt((HBMX - CHBX)**2 + (HBMY - CHBY)**2) < HBMR + CHBR) {
+      CX = random((imgCheeseX/2),width-(imgCheeseX/2));
+      CY = random((imgCheeseY/2),height-(imgCheeseY/2));
+      CheeseCounter += 1;
+      CatSpeed *= 1.1
+    }
+
+    Cat1X += Cat1SpeedX;
+    Cat1Y += Cat1SpeedY;
+    Cat2X += Cat2SpeedX;
+    Cat2Y += Cat2SpeedY; 
+    text(CheeseCounter,50,50);
+
+    if (sqrt((HBMX-Cat1HBX)**2+(HBMY-Cat1HBY)**2) < Cat1HBR+HBMR || sqrt((HBMX-Cat2HBX)**2+(HBMY-Cat2HBY)**2) < Cat2HBR+HBMR) {
+      Cat1X = random(imgCat1X,width-imgCat1X);
+      Cat1Y = random(imgCat1Y,height-imgCat1Y); 
+      Cat2X = random(imgCat2X, width-imgCat2X);
+      Cat2Y = random(imgCat2Y, height-imgCat2Y);
+      CatSpeed = 1;
+      IsDead = 1;
+      soundYouDied.play();
+    }
+    image(imgCheese, CX, CY, imgCheeseX, imgCheeseY);
+    if (MRetning > 0) {
+      image(imgMouse, MX, MY);
+    }
+   if (MRetning < 0) {
+      image(imgMouseInverted, MX, MY);
+   }
+    if (Cat1SpeedX > 0) {
+      image(imgCat1, Cat1X, Cat1Y, imgCat1X, imgCat1Y);
+    }
+   if (Cat1SpeedX < 0) {
+      image(imgCat1Inverted, Cat1X, Cat1Y, imgCat1X, imgCat1Y);
+    }
+    if (Cat2SpeedX > 0) {
+     image(imgCat2, Cat2X, Cat2Y, imgCat2X, imgCat2Y);
+   }
+   if (Cat2SpeedX < 0) {
+      image(imgCat2Inverted, Cat2X, Cat2Y, imgCat2X, imgCat2Y);
+     }
   }
 
-  if (sqrt((HBMX - CHBX)**2 + (HBMY - CHBY)**2) < HBMR + CHBR) {
-  CX = random((imgCheeseX/2),width-(imgCheeseX/2));
-  CY = random((imgCheeseY/2),height-(imgCheeseY/2));
-  CheeseCounter += 1;
-  CatSpeed *= 1.1
-  }
-
-  Cat1X += Cat1SpeedX;
-  Cat1Y += Cat1SpeedY;
-  Cat2X += Cat2SpeedX;
-  Cat2Y += Cat2SpeedY; 
-  text(CheeseCounter,50,50);
-
-  if (sqrt((HBMX-Cat1HBX)**2+(HBMY-Cat1HBY)**2) < Cat1HBR+HBMR || sqrt((HBMX-Cat2HBX)**2+(HBMY-Cat2HBY)**2) < Cat2HBR+HBMR) {
-    Cat1X = random(imgCat1X,width-imgCat1X);
-    Cat1Y = random(imgCat1Y,height-imgCat1Y); 
-    Cat2X = random(imgCat2X, width-imgCat2X);
-    Cat2Y = random(imgCat2Y, height-imgCat2Y);
-    CatSpeed = 1;
-    IsDead = 1;
-    soundYouDied.play();
-  }
-  image(imgCheese, CX, CY, imgCheeseX, imgCheeseY);
-  if (MRetning > 0) {
-    image(imgMouse, MX, MY);
-  }
-  if (MRetning < 0) {
-    image(imgMouseInverted, MX, MY);
-  }
-  if (Cat1SpeedX > 0) {
-    image(imgCat1, Cat1X, Cat1Y, imgCat1X, imgCat1Y);
-  }
-  if (Cat1SpeedX < 0) {
-    image(imgCat1Inverted, Cat1X, Cat1Y, imgCat1X, imgCat1Y);
-  }
-  if (Cat2SpeedX > 0) {
-    image(imgCat2, Cat2X, Cat2Y, imgCat2X, imgCat2Y);
-  }
-  if (Cat2SpeedX < 0) {
-    image(imgCat2Inverted, Cat2X, Cat2Y, imgCat2X, imgCat2Y);
-  }
-  }
   if (IsDead == 1) {
     background(0);
     textAlign(CENTER);
@@ -167,5 +168,9 @@ function draw() {
     rect(width/2-200,250,400,50)
     fill(0);
     text('Restart',width/2,285);
+    fill(255);
+    if (mouseIsPressed == true) {
+      IsDead = 0;
+    }
   }
 }

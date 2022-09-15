@@ -1,7 +1,7 @@
 let MX;
 let MY;
 let MR = 50;
-let Speed;
+let Speed = 5;
 let imgMouse;
 let imgMouseInverted;
 let HBMX;
@@ -35,7 +35,7 @@ let imgCat2;
 let imgCat2Inverted;
 let imgCat2X = 800/5.5;
 let imgCat2Y = 800/5.5;
-let CatSpeed = 1;
+let CatSpeed = 1.5;
 let soundYouDied;
 
 let CX;
@@ -49,6 +49,15 @@ let imgCheeseX = 650/15;
 let imgCheeseY = 572/15;
 let IsDead = 0;
 
+let BI;
+let BIN; // The Quotes do not share my personal opinion. They are meant to be a joke, and a joke only.
+let Quote = ['Your Birth Was A Mistake', '"Just The Text: "Jumpcare""', 'Something, Something, You Are Bad', 'Insert Random Insult', 'Yes You Will Get Paid Robertichd', 'Stop It Patrick! You Are Scaring Him', 'Your Intelligence Is An Insult To All Of Humanity', 'Just Kidding... Or Something', 'Char', 'We Ran Out Of Insults', 'Here Is A Cookie For You... Sike You Dumb Fuck', 'Lorem Ipsum', 'Venus Is Short', 'The fact that youre still alive proves that there is no god', 'i want to go home', 'Cat', 'Rat', 'Im Batman!', 'Youre not even good enough for a participation trophy','Semen','Cunt'];
+let QuoteYourBad = 'you incompetent piece of shit, this game is incredibly fucking simple, how in the name of all that is holy did you manage to die so quickly... fucking hell';
+let QuoteN;
+let Background;
+let Respawn;
+let RespawnPressed;
+
 function preload() {
   imgMouse = loadImage('Assets/Mouse.png');
   imgMouseInverted = loadImage('Assets/MouseInverted.png');
@@ -58,11 +67,14 @@ function preload() {
   imgCat2Inverted = loadImage('Assets/Cat2Inverted.png');
   imgCheese = loadImage('Assets/Cheese.png');
   soundYouDied = loadSound('Assets/YouDied.mp3');
+  BI = [loadImage('Assets/Mike/Baby-Yoda.png'),loadImage('Assets/Mike/IDK.png'),loadImage('Assets/Mike/Mike-1.png'),loadImage('Assets/Mike/Mike-2.png'),loadImage('Assets/Mike/Mike-3.png'),loadImage('Assets/Mike/MikeShrek.png'),loadImage('Assets/Mike/Minion.png'),loadImage('Assets/Mike/Shrek-1.png'),loadImage('Assets/Mike/Shrek.png'),loadImage('Assets/Mike/TMNT-1.png'),loadImage('Assets/Mike/TMNT-2.png'),loadImage('Assets/Mike/Yoda-Lego.png'),loadImage('Assets/Mike/Yoda.png')];
+  Background = loadImage('Assets/CardBoardBox.jpg');
+  Respawn = loadImage('Assets/Respawn.png');
+  RespawnPressed = loadImage('Assets/RespawnPressed.png');
 }
 
 function setup() {
-  createCanvas(1500, 700);
-  Speed = 7.5;
+  createCanvas(windowWidth, windowHeight);
   MX = random(MR,width-MR);
   MY = random(MR,height-MR);
 
@@ -79,12 +91,14 @@ function setup() {
   CHBR = imgCheeseY/2;
   CheeseCounter = 0;
   textSize(32);
+  BIN = random(BI);
+  QuoteN = random(Quote);
 }
 
 function draw() {
   fill(250);
   if (IsDead == 0) {
-    background(100);
+    background(Background);
     HBMX = MX+45;
     HBMY = MY+HBMR;
     CHBX = CX + (imgCheeseX/2);
@@ -92,33 +106,45 @@ function draw() {
     Cat1HBX = Cat1X + (imgCat1X / 2);
     Cat1HBY = Cat1Y + (imgCat1Y / 2);
     Cat2HBX = Cat2X + (imgCat2X / 2);
-   Cat2HBY = Cat2Y + (imgCat2Y / 2);
+    Cat2HBY = Cat2Y + (imgCat2Y / 2);
   
-    Cat1SpeedX = ((CatSpeed+1)/sqrt((HBMX-Cat1HBX)**2+(HBMY-Cat1HBY)**2)) * (HBMX-Cat1HBX);
-    Cat1SpeedY = ((CatSpeed+1)/sqrt((HBMX-Cat1HBX)**2+(HBMY-Cat1HBY)**2)) * (HBMY-Cat1HBY);
+    Cat1SpeedX = ((CatSpeed+0.5)/sqrt((HBMX-Cat1HBX)**2+(HBMY-Cat1HBY)**2)) * (HBMX-Cat1HBX);
+    Cat1SpeedY = ((CatSpeed+0.5)/sqrt((HBMX-Cat1HBX)**2+(HBMY-Cat1HBY)**2)) * (HBMY-Cat1HBY);
     Cat2SpeedX = (CatSpeed/sqrt((HBMX-Cat2HBX)**2+(HBMY-Cat2HBY)**2)) * (HBMX-Cat2HBX);
     Cat2SpeedY = (CatSpeed/sqrt((HBMX-Cat2HBX)**2+(HBMY-Cat2HBY)**2)) * (HBMY-Cat2HBY);
     
-    if (keyIsDown(87) && MY > 0) { // W
-     MY -= Speed;
+    if (keyIsDown(87) || keyIsDown(UP_ARROW)) { // W
+     if (MY > 0) {
+      MY -= Speed;
+     }
     }
-    if (keyIsDown(83) && MY < height-95) { // S
-      MY += Speed;
+    if (keyIsDown(83) || keyIsDown(DOWN_ARROW)) { // S
+      if (MY < height-82) {
+        MY += Speed;
+      }
     }
-    if (keyIsDown(65) && MX > 0) { // A
-      MX -= Speed;
-      MRetning = -1;
+    if (keyIsDown(65) || keyIsDown(LEFT_ARROW)) { // A
+      if (MX > 0) {
+        MX -= Speed;
+        MRetning = -1;
+      }
     }
-    if (keyIsDown(68) && MX < width-74) { // D
-      MX += Speed;
-      MRetning = 1; 
+    if (keyIsDown(68) || keyIsDown(RIGHT_ARROW)) { // D
+      if (MX < width-90) {
+        MX += Speed;
+        MRetning = 1; 
+      }
+
     }
 
    if (sqrt((HBMX - CHBX)**2 + (HBMY - CHBY)**2) < HBMR + CHBR) {
       CX = random((imgCheeseX/2),width-(imgCheeseX/2));
       CY = random((imgCheeseY/2),height-(imgCheeseY/2));
       CheeseCounter += 1;
-      CatSpeed *= 1.1
+      if (CatSpeed < Speed) {
+        CatSpeed *= 1.055
+      }
+      Speed *= 1.015;
     }
 
     Cat1X += Cat1SpeedX;
@@ -134,7 +160,8 @@ function draw() {
       Cat2Y = random(imgCat2Y, height-imgCat2Y);
       CatSpeed = 1;
       IsDead = 1;
-      soundYouDied.play();
+      BIN = random(BI);
+      QuoteN = random(Quote);
     }
     image(imgCheese, CX, CY, imgCheeseX, imgCheeseY);
     if (MRetning > 0) {
@@ -157,20 +184,28 @@ function draw() {
      }
   }
 
+
   if (IsDead == 1) {
-    background(0);
+    background(BIN);
     textAlign(CENTER);
     textSize(100);
-    text('Game Over',width/2,160);
+    stroke(0);
+    strokeWeight(10);
+    text('You Died!',width/2,160);
     textSize(25);
-    text('Score:', width/2-50,200);
-    text(CheeseCounter,width/2,200);
-    rect(width/2-200,250,400,50)
-    fill(0);
-    text('Restart',width/2,285);
-    fill(255);
-    if (mouseIsPressed == true) {
-      IsDead = 0;
+    strokeWeight(5);
+    text('Score:', width/2-30,200);
+    text(CheeseCounter,width/2+20,202);
+    if (CheeseCounter < 1) {text(QuoteYourBad,width/2,300)};
+    if (CheeseCounter > 0) {text(QuoteN,width/2,300)};
+    strokeWeight(1);
+    image(Respawn,width/2-400,500);
+    if (mouseX > width/2-400 && mouseX < width/2+400 && mouseY > 500 && mouseY < 580) {
+      image(RespawnPressed,width/2-400,500);
+      if (mouseIsPressed == true) {
+        IsDead = 0;
+        CheeseCounter = 0;
+      }
     }
   }
 }

@@ -50,7 +50,7 @@ let BIN; // The Quotes do not share my personal opinion. They are meant to be a 
 let Quote = ['Your Birth Was A Mistake', '"Just The Text: "Jumpcare""', 'Something, Something, You Are Bad', 'Insert Random Insult', 'Yes You Will Get Paid Robertichd', 'Stop It Patrick! You Are Scaring Him', 'Your Intelligence Is An Insult To All Of Humanity', 'Just Kidding... Or Something', 'Char', 'We Ran Out Of Insults', 'Here Is A Cookie For You... Sike You Dumb Fuck', 'Lorem Ipsum', 'Venus Is Short', 'The fact that youre still alive proves that there is no god', 'i want to go home', 'Cat', 'Rat', 'Im Batman!', 'Youre not even good enough for a participation trophy','Semen','Cunt'];
 let QuoteYourBad = 'you incompetent piece of shit, this game is incredibly fucking simple, how in the name of all that is holy did you manage to die so quickly... fucking hell';
 let QuoteN;
-let Background;
+let Backgroundimg;
 let Respawn;
 let RespawnPressed;
 
@@ -63,7 +63,7 @@ function preload() {
   imgCat2Inverted = loadImage('Assets/Cat2Inverted.png');
   imgCheese = loadImage('Assets/Cheese.png');
   BI = [loadImage('Assets/Mike/Baby-Yoda.png'),loadImage('Assets/Mike/IDK.png'),loadImage('Assets/Mike/Mike-1.png'),loadImage('Assets/Mike/Mike-2.png'),loadImage('Assets/Mike/Mike-3.png'),loadImage('Assets/Mike/MikeShrek.png'),loadImage('Assets/Mike/Minion.png'),loadImage('Assets/Mike/Shrek-1.png'),loadImage('Assets/Mike/Shrek.png'),loadImage('Assets/Mike/TMNT-1.png'),loadImage('Assets/Mike/TMNT-2.png'),loadImage('Assets/Mike/Yoda-lego.png'),loadImage('Assets/Mike/Yoda.png')];
-  Background = loadImage('Assets/CardBoardBox.jpg');
+  Backgroundimg = loadImage('Assets/CardBoardBox.jpg');
   Respawn = loadImage('Assets/Respawn.png');
   RespawnPressed = loadImage('Assets/RespawnPressed.png');
 }
@@ -93,7 +93,7 @@ function setup() {
 function draw() {
   fill(250);
   if (IsDead == 0) {
-    background(Background);
+    background(Backgroundimg);
     HBMX = MX+45;
     HBMY = MY+HBMR;
     CHBX = CX + (imgCheeseX/2);

@@ -113,6 +113,7 @@ function draw() {
     Cat2SpeedX = (CatSpeed/sqrt((HBMX-Cat2HBX)**2+(HBMY-Cat2HBY)**2)) * (HBMX-Cat2HBX);
     Cat2SpeedY = (CatSpeed/sqrt((HBMX-Cat2HBX)**2+(HBMY-Cat2HBY)**2)) * (HBMY-Cat2HBY);
     
+<<<<<<< HEAD
     if (keyIsDown(87) || keyIsDown(UP_ARROW)) { // W
      if (MY > 0) {
       MY -= Speed;
@@ -135,16 +136,36 @@ function draw() {
         MRetning = 1; 
       }
 
+=======
+    if (keyIsDown(87) && MY > 0) { // W
+      MY -= Speed;
+    }
+    if (keyIsDown(83) && MY < height-85) { // S
+      MY += Speed;
+    }
+    if (keyIsDown(65) && MX > 0) { // Ads
+      MX -= Speed;
+      MRetning = -1;
+    }
+    if (keyIsDown(68) && MX < width-91) { // D
+      MX += Speed;
+      MRetning = 1; 
+>>>>>>> 9c757e6a775d5a5b4755d16ac3a58fe399579d8b
     }
 
-   if (sqrt((HBMX - CHBX)**2 + (HBMY - CHBY)**2) < HBMR + CHBR) {
+    if (sqrt((HBMX - CHBX)**2 + (HBMY - CHBY)**2) < HBMR + CHBR) {
       CX = random((imgCheeseX/2),width-(imgCheeseX/2));
       CY = random((imgCheeseY/2),height-(imgCheeseY/2));
       CheeseCounter += 1;
       if (CatSpeed < Speed) {
+<<<<<<< HEAD
         CatSpeed *= 1.055
       }
       Speed *= 1.015;
+=======
+        CatSpeed *= 1.1
+      }
+>>>>>>> 9c757e6a775d5a5b4755d16ac3a58fe399579d8b
     }
 
     Cat1X += Cat1SpeedX;
@@ -160,28 +181,31 @@ function draw() {
       Cat2Y = random(imgCat2Y, height-imgCat2Y);
       CatSpeed = 1;
       IsDead = 1;
+<<<<<<< HEAD
       BIN = random(BI);
       QuoteN = random(Quote);
+=======
+>>>>>>> 9c757e6a775d5a5b4755d16ac3a58fe399579d8b
     }
     image(imgCheese, CX, CY, imgCheeseX, imgCheeseY);
     if (MRetning > 0) {
       image(imgMouse, MX, MY);
     }
-   if (MRetning < 0) {
+    if (MRetning < 0) {
       image(imgMouseInverted, MX, MY);
-   }
+    }
     if (Cat1SpeedX > 0) {
       image(imgCat1, Cat1X, Cat1Y, imgCat1X, imgCat1Y);
     }
-   if (Cat1SpeedX < 0) {
+    if (Cat1SpeedX < 0) {
       image(imgCat1Inverted, Cat1X, Cat1Y, imgCat1X, imgCat1Y);
     }
     if (Cat2SpeedX > 0) {
-     image(imgCat2, Cat2X, Cat2Y, imgCat2X, imgCat2Y);
-   }
-   if (Cat2SpeedX < 0) {
+      image(imgCat2, Cat2X, Cat2Y, imgCat2X, imgCat2Y);
+    }
+    if (Cat2SpeedX < 0) {
       image(imgCat2Inverted, Cat2X, Cat2Y, imgCat2X, imgCat2Y);
-     }
+    }
   }
 
 
@@ -193,6 +217,7 @@ function draw() {
     strokeWeight(10);
     text('You Died!',width/2,160);
     textSize(25);
+<<<<<<< HEAD
     strokeWeight(5);
     text('Score:', width/2-30,200);
     text(CheeseCounter,width/2+20,202);
@@ -205,6 +230,17 @@ function draw() {
       if (mouseIsPressed == true) {
         IsDead = 0;
         CheeseCounter = 0;
+=======
+    text('Score:', width/2-50,200);
+    text(CheeseCounter,width/2,200);
+    rect(width/2-200,250,400,50)
+    fill(0);
+    text('Restart',width/2,285);
+    fill(255);
+    if (mouseIsPressed == true) {
+      if (mouseX > width/2-200 && mouseX < width/2+200 && mouseY > 200 && mouseY < 300) {
+        IsDead = 0;
+>>>>>>> 9c757e6a775d5a5b4755d16ac3a58fe399579d8b
       }
     }
   }

@@ -27,8 +27,7 @@ function draw() {
     noStroke();
     fill(0);
     textSize(50);
-    text('Press For Next Screen',width/2,340);
-
+    text('Press For Next Screen',width/2,340)
   }
   if (screen2 == 1) {
     background(250);

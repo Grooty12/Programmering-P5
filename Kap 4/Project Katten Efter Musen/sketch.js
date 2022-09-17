@@ -43,16 +43,21 @@ let CheeseCounter;
 let imgCheese;
 let imgCheeseX = 650/15;
 let imgCheeseY = 572/15;
-let IsDead = 0;
 
 let BI;
 let BIN; // The Quotes do not share my personal opinion. They are meant to be a joke, and a joke only.
 let Quote = ['Your Birth Was A Mistake', '"Just The Text: "Jumpcare""', 'Something, Something, You Are Bad', 'Insert Random Insult', 'Yes You Will Get Paid Robertichd', 'Stop It Patrick! You Are Hurting Him', 'Your Intelligence Is An Insult To All Of Humanity', 'Just Kidding... Or Something', 'Char', 'We Ran Out Of Insults', 'Here Is A Cookie For You... Sike You Dumb Fuck', 'Lorem Ipsum', 'Venus Is Short', 'The fact that youre still alive proves that there is no god', 'i want to go home', 'Cat', 'Rat', 'Im Batman!', 'Youre not even good enough for a participation trophy','Semen','Cunt'];
 let QuoteYourBad = 'you incompetent piece of shit, this game is incredibly fucking simple, how in the name of all that is holy did you manage to die so quickly... fucking hell';
 let QuoteN;
-let Backgroundimg;
+let imgBackground;
 let Respawn;
 let RespawnPressed;
+let TitleScreen;
+let TitleScreenPressed;
+let StartMenu = 1;
+let Game = 0;
+let Dead = 0;
+
 
 function preload() {
   imgMouse = loadImage('Assets/Mouse.png');
@@ -63,9 +68,11 @@ function preload() {
   imgCat2Inverted = loadImage('Assets/Cat2Inverted.png');
   imgCheese = loadImage('Assets/Cheese.png');
   BI = [loadImage('Assets/Mike/Baby-Yoda.png'),loadImage('Assets/Mike/IDK.png'),loadImage('Assets/Mike/Mike-1.png'),loadImage('Assets/Mike/Mike-2.png'),loadImage('Assets/Mike/Mike-3.png'),loadImage('Assets/Mike/MikeShrek.png'),loadImage('Assets/Mike/Minion.png'),loadImage('Assets/Mike/Shrek-1.png'),loadImage('Assets/Mike/Shrek.png'),loadImage('Assets/Mike/TMNT-1.png'),loadImage('Assets/Mike/TMNT-2.png'),loadImage('Assets/Mike/Yoda-lego.png'),loadImage('Assets/Mike/Yoda.png')];
-  Backgroundimg = loadImage('Assets/CardBoardBox.jpg');
+  imgBackground = loadImage('Assets/CardBoardBox.jpg');
   Respawn = loadImage('Assets/Respawn.png');
   RespawnPressed = loadImage('Assets/RespawnPressed.png');
+  TitleScreen = loadImage('Assets/Title-Screen.png');
+  TitleScreenPressed = loadImage('Assets/Title-Screen-Pressed.png');
 }
 
 function setup() {
@@ -85,15 +92,36 @@ function setup() {
   CY = random((imgCheeseY/2),height-(imgCheeseY/2));
   CHBR = imgCheeseY/2;
   CheeseCounter = 0;
-  textSize(32);
   BIN = random(BI);
   QuoteN = random(Quote);
 }
 
 function draw() {
   fill(250);
-  if (IsDead == 0) {
-    background(Backgroundimg);
+  if (StartMenu == 1) {
+    background(50);
+    textAlign(CENTER);
+    textSize(100);
+    stroke(255);
+    strokeWeight(5);
+    text('Welcome!',width/2,100);
+    fill(255);
+    if (mouseX > width/2-400 && mouseX < width/2+400 && mouseY > 250 && mouseY < 350) {
+      if (mouseIsPressed === true) {
+        StartMenu = 0;
+        Game = 1;
+      }
+      fill(210);
+    }
+    strokeWeight(2);
+    rect(width/2-400,300,800,50);
+    noStroke();
+    fill(0);
+    textSize(50);
+    text('Press Here To Start', width/2, 340)
+  }
+  if (Game == 1) {
+    background(imgBackground);
     HBMX = MX+45;
     HBMY = MY+HBMR;
     CHBX = CX + (imgCheeseX/2);
@@ -107,10 +135,9 @@ function draw() {
     Cat1SpeedY = ((CatSpeed+0.5)/sqrt((HBMX-Cat1HBX)**2+(HBMY-Cat1HBY)**2)) * (HBMY-Cat1HBY);
     Cat2SpeedX = (CatSpeed/sqrt((HBMX-Cat2HBX)**2+(HBMY-Cat2HBY)**2)) * (HBMX-Cat2HBX);
     Cat2SpeedY = (CatSpeed/sqrt((HBMX-Cat2HBX)**2+(HBMY-Cat2HBY)**2)) * (HBMY-Cat2HBY);
-    
     if (keyIsDown(87) || keyIsDown(UP_ARROW)) { // W
       if (MY > 0) {
-      MY -= Speed;
+        MY -= Speed;
       }
     }
     if (keyIsDown(83) || keyIsDown(DOWN_ARROW)) { // S
@@ -129,24 +156,22 @@ function draw() {
         MX += Speed;
         MRetning = 1; 
       }
-
     }
 
     if (sqrt((HBMX - CHBX)**2 + (HBMY - CHBY)**2) < HBMR + CHBR) {
       CX = random((imgCheeseX/2),width-(imgCheeseX/2));
       CY = random((imgCheeseY/2),height-(imgCheeseY/2));
       CheeseCounter += 1;
+      Speed *= 1.015;
       if (CatSpeed < Speed) {
         CatSpeed *= 1.055
       }
-      Speed *= 1.015;
     }
 
     Cat1X += Cat1SpeedX;
     Cat1Y += Cat1SpeedY;
     Cat2X += Cat2SpeedX;
     Cat2Y += Cat2SpeedY; 
-    text(CheeseCounter,50,50);
 
     if (sqrt((HBMX-Cat1HBX)**2+(HBMY-Cat1HBY)**2) < Cat1HBR+HBMR || sqrt((HBMX-Cat2HBX)**2+(HBMY-Cat2HBY)**2) < Cat2HBR+HBMR) {
       Cat1X = random(imgCat1X,width-imgCat1X);
@@ -154,10 +179,14 @@ function draw() {
       Cat2X = random(imgCat2X, width-imgCat2X);
       Cat2Y = random(imgCat2Y, height-imgCat2Y);
       CatSpeed = 1;
-      IsDead = 1;
+      Dead = 1;
+      Game = 0;
       BIN = random(BI);
       QuoteN = random(Quote);
     }
+    textSize(32);
+    fill(250);
+    text(CheeseCounter,50,50);
     image(imgCheese, CX, CY, imgCheeseX, imgCheeseY);
     if (MRetning > 0) {
       image(imgMouse, MX, MY);
@@ -179,7 +208,7 @@ function draw() {
     }
   }
 
-  if (IsDead == 1) {
+  if (Dead == 1) {
     background(BIN);
     textAlign(CENTER);
     textSize(100);
@@ -193,12 +222,22 @@ function draw() {
     if (CheeseCounter < 1) {text(QuoteYourBad,width/2,300);}
     if (CheeseCounter > 0) {text(QuoteN,width/2,300);}
     strokeWeight(1);
-    image(Respawn,width/2-400,500);
-    if (mouseX > width/2-400 && mouseX < width/2+400 && mouseY > 500 && mouseY < 580) {
-      image(RespawnPressed,width/2-400,500);
+    image(Respawn,width/2-300,500);
+    image(TitleScreen, width/2-300, 620);
+    if (mouseX > width/2-300 && mouseX < width/2+300 && mouseY > 500 && mouseY < 560) {
+      image(RespawnPressed,width/2-300,500);
       if (mouseIsPressed == true) {
-        IsDead = 0;
+        Dead = 0;
         CheeseCounter = 0;
+        Game = 1;
+      }
+    }
+    if (mouseX > width/2-300 && mouseX < width/2+300 && mouseY > 620 && mouseY < 690) {
+      image(TitleScreenPressed, width/2-300, 620);
+      if (mouseIsPressed == true) {
+        CheeseCounter = 0;
+        Dead = 0;
+        StartMenu = 1;
       }
     }
   }

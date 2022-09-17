@@ -47,7 +47,7 @@ let IsDead = 0;
 
 let BI;
 let BIN; // The Quotes do not share my personal opinion. They are meant to be a joke, and a joke only.
-let Quote = ['Your Birth Was A Mistake', '"Just The Text: "Jumpcare""', 'Something, Something, You Are Bad', 'Insert Random Insult', 'Yes You Will Get Paid Robertichd', 'Stop It Patrick! You Are Scaring Him', 'Your Intelligence Is An Insult To All Of Humanity', 'Just Kidding... Or Something', 'Char', 'We Ran Out Of Insults', 'Here Is A Cookie For You... Sike You Dumb Fuck', 'Lorem Ipsum', 'Venus Is Short', 'The fact that youre still alive proves that there is no god', 'i want to go home', 'Cat', 'Rat', 'Im Batman!', 'Youre not even good enough for a participation trophy','Semen','Cunt'];
+let Quote = ['Your Birth Was A Mistake', '"Just The Text: "Jumpcare""', 'Something, Something, You Are Bad', 'Insert Random Insult', 'Yes You Will Get Paid Robertichd', 'Stop It Patrick! You Are Hurting Him', 'Your Intelligence Is An Insult To All Of Humanity', 'Just Kidding... Or Something', 'Char', 'We Ran Out Of Insults', 'Here Is A Cookie For You... Sike You Dumb Fuck', 'Lorem Ipsum', 'Venus Is Short', 'The fact that youre still alive proves that there is no god', 'i want to go home', 'Cat', 'Rat', 'Im Batman!', 'Youre not even good enough for a participation trophy','Semen','Cunt'];
 let QuoteYourBad = 'you incompetent piece of shit, this game is incredibly fucking simple, how in the name of all that is holy did you manage to die so quickly... fucking hell';
 let QuoteN;
 let Backgroundimg;

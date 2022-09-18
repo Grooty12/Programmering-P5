@@ -58,7 +58,6 @@ let StartMenu = 1;
 let Game = 0;
 let Dead = 0;
 
-
 function preload() {
   imgMouse = loadImage('Assets/Mouse.png');
   imgMouseInverted = loadImage('Assets/MouseInverted.png');
@@ -207,7 +206,6 @@ function draw() {
       image(imgCat2Inverted, Cat2X, Cat2Y, imgCat2X, imgCat2Y);
     }
   }
-
   if (Dead == 1) {
     background(BIN);
     textAlign(CENTER);

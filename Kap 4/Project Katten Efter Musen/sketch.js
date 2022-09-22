@@ -1,14 +1,16 @@
-let MX; // Musesns forskellige værdier. Dette er dens x-værdi
-let MY;
-let MR = 50;
-let Speed = 5;
-let imgMouse; // Billed af musen
-let imgMouseInverted; // Billed af musen, bare inverted
-let HBMX; // Musens hitbox's x-værdi
-let HBMY; // Musens hitbox's y-værdi
-let HBMR = 77 / 2; // Hitbox's cirklens radius-.
-let MRetning = 1; // Fortæller hvilken retning musen bevæger sig i
-
+let Mouse = {
+  // Array med alle musens værdier.
+  X: 0, // Koordinat
+  Y: 0, // Koordinat
+  R: 50, // Hvor bred/høj billedet er. Bruges til, hvornår musen ikke længere kan bevæge sig i forhold til væggen.
+  Speed: 5, // Dens hastighed, når man trykker på tasterne
+  img: 0, // Billed
+  imginverted: 0, // Billed, omvendt (hvis man går den anden vej)
+  HBX: 0, // Hitbox
+  HBY: 0, // Hitbox
+  HBR: 77 / 2, // Hitboxcirkel radius
+  Retning: 1, // Hvilken retning den går
+};
 let Cat1X; // Den første kats forskellige værdier.
 let Cat1Y;
 let Cat1SpeedX; // Hastighed (x)
@@ -83,8 +85,8 @@ let Game = 0; // Variable til, om spillet er i gang
 let Dead = 0; // Variable til, om man er død
 
 function preload() {
-  imgMouse = loadImage("Assets/Mouse.png");
-  imgMouseInverted = loadImage("Assets/MouseInverted.png");
+  Mouse.img = loadImage("Assets/Mouse.png");
+  Mouse.imginverted = loadImage("Assets/MouseInverted.png");
   imgCat1 = loadImage("Assets/Cat1.png");
   imgCat1Inverted = loadImage("Assets/Cat1Inverted.png");
   imgCat2 = loadImage("Assets/Cat2.png");
@@ -114,15 +116,15 @@ function preload() {
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  MX = random(MR, width - MR); // Musen spawner et tilfældigt sted
-  MY = random(MR, height - MR);
+  Mouse.X = random(Mouse.R, width / 2 - Mouse.R); // Musen spawner et tilfældigt sted
+  Mouse.Y = random(Mouse.R, height / 2 - Mouse.R);
 
-  Cat1X = random(imgCat1X, width - imgCat1X); // Kat 1 spawner et tilfældigt sted
-  Cat1Y = random(imgCat1Y, height - imgCat1Y);
+  Cat1X = random(width / 2, width - imgCat1X); // Kat 1 spawner et tilfældigt sted
+  Cat1Y = random(height / 2, height - imgCat1Y);
   Cat1HBR = imgCat1Y / 2; // Kattens hitbox-radius er halvdelen af billedets y-værdi
 
-  Cat2X = random(imgCat2X, width - imgCat2X); // Kat 2 spawner et tilfældigt sted
-  Cat2Y = random(imgCat2Y, height - imgCat2Y);
+  Cat2X = random(width / 2, width - imgCat2X); // Kat 2 spawner et tilfældigt sted
+  Cat2Y = random(height / 2, height - imgCat2Y);
   Cat2HBR = imgCat2X / 2; // Kattens hitbox-radius er halvedelen af billedets x-værdi
 
   CX = random(imgCheeseX / 2, width - imgCheeseX / 2); // Osten spawner et tilfældigt sted
@@ -164,8 +166,8 @@ function draw() {
   if (Game == 1) {
     // Hvis variablen "Game" er 1, er spillet i gang
     background(imgBackground);
-    HBMX = MX + 45; // Musens hitbox x-værdi er halvdelen af billedets bredde (90) mere end musens musens x-værdi (dens x og y-værdi er oppe i venstre hjørne)
-    HBMY = MY + HBMR; // Musens hitbox y-værdi er halvdelen af billedet højde (det samme som dens hitbox-radius) mere end musens y-værdi
+    Mouse.HBX = Mouse.X + 45; // Musens hitbox x-værdi er halvdelen af billedets bredde (90) mere end musens musens x-værdi (dens x og y-værdi er oppe i venstre hjørne)
+    Mouse.HBY = Mouse.Y + Mouse.HBR; // Musens hitbox y-værdi er halvdelen af billedet højde (det samme som dens hitbox-radius) mere end musens y-værdi
     CHBX = CX + imgCheeseX / 2; // Samme som før, bare med ost-billedets bredde /2
     CHBY = CY + imgCheeseY / 2;
     Cat1HBX = Cat1X + imgCat1X / 2; // Samme som med osten, bare for kattene
@@ -174,55 +176,62 @@ function draw() {
     Cat2HBY = Cat2Y + imgCat2Y / 2;
 
     Cat1SpeedX =
-      ((CatSpeed + 0.5) / sqrt((HBMX - Cat1HBX) ** 2 + (HBMY - Cat1HBY) ** 2)) * // Kat 1s hastighed er kathastigheded +0.5 (for at få noget forskel mellem de to katte, så de ikke er ovenpå hinanden) dividered med retningsvektoren
-      (HBMX - Cat1HBX);
+      ((CatSpeed + 0.5) /
+        sqrt((Mouse.HBX - Cat1HBX) ** 2 + (Mouse.HBY - Cat1HBY) ** 2)) * // Kat 1s hastighed er kathastigheded +0.5 (for at få noget forskel mellem de to katte, så de ikke er ovenpå hinanden) dividered med retningsvektoren
+      (Mouse.HBX - Cat1HBX);
     Cat1SpeedY =
-      ((CatSpeed + 0.5) / sqrt((HBMX - Cat1HBX) ** 2 + (HBMY - Cat1HBY) ** 2)) * // Samme, bare for y-værdien
-      (HBMY - Cat1HBY);
+      ((CatSpeed + 0.5) /
+        sqrt((Mouse.HBX - Cat1HBX) ** 2 + (Mouse.HBY - Cat1HBY) ** 2)) * // Samme, bare for y-værdien
+      (Mouse.HBY - Cat1HBY);
     Cat2SpeedX =
-      (CatSpeed / sqrt((HBMX - Cat2HBX) ** 2 + (HBMY - Cat2HBY) ** 2)) * // Samme bare uden at lægge 0.5 til
-      (HBMX - Cat2HBX);
+      (CatSpeed /
+        sqrt((Mouse.HBX - Cat2HBX) ** 2 + (Mouse.HBY - Cat2HBY) ** 2)) * // Samme bare uden at lægge 0.5 til
+      (Mouse.HBX - Cat2HBX);
     Cat2SpeedY =
-      (CatSpeed / sqrt((HBMX - Cat2HBX) ** 2 + (HBMY - Cat2HBY) ** 2)) * // Samme
-      (HBMY - Cat2HBY);
+      (CatSpeed /
+        sqrt((Mouse.HBX - Cat2HBX) ** 2 + (Mouse.HBY - Cat2HBY) ** 2)) * // Samme
+      (Mouse.HBY - Cat2HBY);
     if (keyIsDown(87) || keyIsDown(UP_ARROW)) {
       // Hvis man trykker på enten "W" eler "UP-arrow", bevæger musen sig opad
       // W
-      if (MY > 0) {
-        MY -= Speed;
+      if (Mouse.Y > 0) {
+        Mouse.Y -= Mouse.Speed;
       }
     }
     if (keyIsDown(83) || keyIsDown(DOWN_ARROW)) {
       // "S" eller "DOWN-arrow" - musen bevæger sig nedad
       // S
-      if (MY < height - 82) {
-        MY += Speed;
+      if (Mouse.Y < height - 82) {
+        Mouse.Y += Mouse.Speed;
       }
     }
     if (keyIsDown(65) || keyIsDown(LEFT_ARROW)) {
       // "A" eller "Left-arrow" - musen bevæger sig til venstre
       // A
-      if (MX > 0) {
-        MX -= Speed;
-        MRetning = -1; // Retningen ændres til at være til venstre
+      if (Mouse.X > 0) {
+        Mouse.X -= Mouse.Speed;
+        Mouse.Retning = -1; // Retningen ændres til at være til venstre
       }
     }
     if (keyIsDown(68) || keyIsDown(RIGHT_ARROW)) {
       // "D" eller "right-arrow" - musen bevæger sig til højre
       // D
-      if (MX < width - 90) {
-        MX += Speed;
-        MRetning = 1; // Retningen ændres til at være til højre
+      if (Mouse.X < width - 90) {
+        Mouse.X += Mouse.Speed;
+        Mouse.Retning = 1; // Retningen ændres til at være til højre
       }
     }
 
-    if (sqrt((HBMX - CHBX) ** 2 + (HBMY - CHBY) ** 2) < HBMR + CHBR) {
+    if (
+      sqrt((Mouse.HBX - CHBX) ** 2 + (Mouse.HBY - CHBY) ** 2) <
+      Mouse.HBR + CHBR
+    ) {
       // Tjekker om musen rammer ostens hitbox
       CX = random(imgCheeseX / 2, width - imgCheeseX / 2); // Osten kommer et tilfældigt sted på banen
       CY = random(imgCheeseY / 2, height - imgCheeseY / 2);
       CheeseCounter += 1; // Man får 1 point
-      Speed *= 1.015; // Musens hastighed går op
-      if (CatSpeed < Speed) {
+      Mouse.Speed *= 1.015; // Musens hastighed går op
+      if (CatSpeed < Mouse.Speed) {
         CatSpeed *= 1.055; // Kattenens hastighed går også op
       }
     }
@@ -233,15 +242,17 @@ function draw() {
     Cat2Y += Cat2SpeedY;
 
     if (
-      sqrt((HBMX - Cat1HBX) ** 2 + (HBMY - Cat1HBY) ** 2) < Cat1HBR + HBMR || // Tjekker om kat 1 rammer musen
-      sqrt((HBMX - Cat2HBX) ** 2 + (HBMY - Cat2HBY) ** 2) < Cat2HBR + HBMR // Tjekker om kat 2 rammer musen
+      sqrt((Mouse.HBX - Cat1HBX) ** 2 + (Mouse.HBY - Cat1HBY) ** 2) <
+        Cat1HBR + Mouse.HBR || // Tjekker om kat 1 rammer musen
+      sqrt((Mouse.HBX - Cat2HBX) ** 2 + (Mouse.HBY - Cat2HBY) ** 2) <
+        Cat2HBR + Mouse.HBR // Tjekker om kat 2 rammer musen
     ) {
       Cat1X = random(imgCat1X, width - imgCat1X); // Kattene kommer tilfældige steder hen
       Cat1Y = random(imgCat1Y, height - imgCat1Y);
       Cat2X = random(imgCat2X, width - imgCat2X);
       Cat2Y = random(imgCat2Y, height - imgCat2Y);
       CatSpeed = 1; // Kattens hastighed bliver resettet
-      Speed = 5; // Musens hastighed bliver resettet
+      Mouse.Speed = 5; // Musens hastighed bliver resettet
       Dead = 1; // Kommer hen på dead skærmen
       Game = 0; // Spillet er slut
       BIN = random(BI); // Tilfældigt baggrundsbilled til død skærmen
@@ -251,13 +262,13 @@ function draw() {
     fill(250);
     text(CheeseCounter, 50, 50); // Viser hvor mange point man har oppe i venstre hjørne
     image(imgCheese, CX, CY, imgCheeseX, imgCheeseY); // Viser billedet af osten
-    if (MRetning == 1) {
+    if (Mouse.Retning == 1) {
       // Hvis retningen er til højre, vises normale musbillede
-      image(imgMouse, MX, MY);
+      image(Mouse.img, Mouse.X, Mouse.Y);
     }
-    if (MRetning == -1) {
+    if (Mouse.Retning == -1) {
       // Hvis retningen er til venstre, vises inverted musbillede
-      image(imgMouseInverted, MX, MY);
+      image(Mouse.imginverted, Mouse.X, Mouse.Y);
     }
     if (Cat1SpeedX > 0) {
       // Hvis kattehastigheden er over 0 (Den bevæger sig til højre), vises normale kattebillede

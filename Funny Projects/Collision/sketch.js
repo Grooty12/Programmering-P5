@@ -1,5 +1,5 @@
 let rects = { x: 200, y: 200, w: 100, h: 50 };
-let circ = { x: 100, y: 100, r: 50 };
+let circ = { x: 100, y: 100, r: 25 };
 
 function setup() {
   createCanvas(800, 600);
@@ -7,22 +7,23 @@ function setup() {
 
 function draw() {
   background(220);
-  if (keyIsDown(UP_ARROW)) {
+  if (keyIsDown(UP_ARROW) || keyIsDown(87)) {
     circ.y -= 1;
   }
-  if (keyIsDown(DOWN_ARROW)) {
+  if (keyIsDown(DOWN_ARROW) || keyIsDown(83)) {
     circ.y += 1;
   }
-  if (keyIsDown(RIGHT_ARROW)) {
+  if (keyIsDown(RIGHT_ARROW) || keyIsDown(68)) {
     circ.x += 1;
   }
-  if (keyIsDown(LEFT_ARROW)) {
+  if (keyIsDown(LEFT_ARROW) || keyIsDown(65)) {
     circ.x -= 1;
   }
-
+  if (collision()) {
+    fill(0, 250, 0);
+  } else [fill(250, 0, 0)];
   rect(rects.x, rects.y, rects.w, rects.h);
   circle(circ.x, circ.y, circ.r * 2);
-  collision();
   print(collision());
 }
 

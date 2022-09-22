@@ -1,5 +1,5 @@
 let rects = { x: 200, y: 200, w: 100, h: 50 };
-let circ = { x: 100, y: 100, r: 25 };
+let circ = { x: 100, y: 100, r: 100 };
 
 function setup() {
   createCanvas(800, 600);

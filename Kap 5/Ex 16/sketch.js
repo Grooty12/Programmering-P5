@@ -15,11 +15,11 @@ function setup() {
   createCanvas(windowWidth, windowHeight);
   background(255);
   stroke(0);
-  for (let i = 0; i <= Names.length; i++) {
-    let Name = [Names[i]];
+  for (let i = 0; i < Names.length; i++) {
+    let Picked = Names[i];
+    let Length = Picked.length * 3;
     textSize(10);
-    textSize(textWidth(Name));
-    print(textWidth(Name));
-    text(Name, random(0, width - 400), random(50, height - 50));
+    textSize(Length);
+    text(Picked, random(0, width - 400), random(50, height - 50));
   }
 }

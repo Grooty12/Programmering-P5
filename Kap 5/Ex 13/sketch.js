@@ -19,8 +19,10 @@ function draw() {
   x = x + 2; // Gør x 2 pixels større så den bevæger sig
   angle = angle + 4; // Gør vinklen større så den bliver roteret.
   for (var row = 3; row <= width; row = row + 50) {
+    // Hvis row er mere bredden af canvas (vokser med 50 pixels per gang), så kører for loopet
     for (var col = 3; col <= height; col = col + 50) {
-      ellipse(row, col, 20, 20);
+      // Hvis col er mindre end højden (vokser med 50 pixels pr gang), så kører for loopet
+      ellipse(row, col, 20, 20); // Der laves en cirkel med radius 10, som er ved row (x) og col (y).
     }
   }
 }

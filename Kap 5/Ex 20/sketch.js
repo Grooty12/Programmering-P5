@@ -1,6 +1,4 @@
-let fx = { a: 2, b: 40 }
-let gx = { a: 1, b: 2, c: 5 }
-
+let fx = { a: 2, b: 40 };
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
@@ -9,12 +7,25 @@ function setup() {
   line(-(width / 2), 0, width / 2, 0);
   line(0, -(height / 2), 0, height / 2);
   strokeWeight(3);
-  for (let i = 0; i < 1000; i++) {
-    // Ret linje
-    point(i, -(i * fx.a + fx.b));
-    point(-i, i * fx.a - fx.b);
+  angleMode(DEGREES);
+
+  line(
+    -width / 2,
+    (width / 2) * fx.a - fx.b,
+    width / 2,
+    (-width / 2) * fx.a - fx.b
+  );
+  for (let i = -1000; i < 1000; i++) {
     // Andengradsfunktion
-    point(i, -(gx.a * (i ** 2) + gx.b * i + gx.c))
-    point(-i, -(gx.a * (i ** 2) + gx.b * i + gx.c))
+    stroke("red");
+    point(i, -(i ** 2));
+    stroke("blue");
+    point(i, -Math.sqrt(i));
+    stroke("green");
+    point(i, -(1000 / i));
+    stroke("pink");
+    point(i, -Math.cos(i) - 200);
+    stroke("Yellow");
+    point(i, -Math.sin(i) + 200);
   }
 }

@@ -1,21 +1,19 @@
 
 let square = [];
-let a = "A"
-let b = "B"
-let c = "C"
-let d = "D"
-let e = "E"
-let f = "F"
-let g = "G"
-let h = "H"
+let line = [];
+let row = [];
+let row1 = [];
 let n = 8;
 let size = 800;
+let pawnIMG;
+function preload() {
+  pawnIMG = loadImage('assets/White/Pawn.png')
+}
 function setup() {
   createCanvas(size, size);
   let P = size / n;
-  let square1;
-  let square2 = [];
   for (let j = 0; j * P < height; j++) {
+    row1 = [];
     for (let i = 0; i * P < width; i++) {
       if (i % 2 == 0) {
         if (j % 2 == 0) {
@@ -30,26 +28,20 @@ function setup() {
           fill(0);
         }
       }
-      square2[i] = [j * P + (P / 2), i * P + (P / 2)];
+      row1.push([j * P + 50, i * P + 50, j + (i * n) + 1]);
       rect(j * P, i * P, P, P);
     }
-    square1 = char(j + 65);
-    print("j * P + (P / 2) =", j * P + (P / 2))
-    square[square1] = square2;
-    print(square2)
+    square.push(row1);
   }
-
   imageMode(CENTER);
-  print("square[a][1] = ", square["A"][1])
-  print("square = ", square)
 }
-/*
 function draw() {
-  DrawBricks("pawn", square[h][3])
+  DrawBricks("pawn", square[3][3])
 }
 
 function DrawBricks(type, place) {
   if (type == "pawn") {
-    circle(place[0], place[1], 50);
+    image(pawnIMG, place[0], place[1], 100, 100);
+    print(place[2])
   }
-}*/
+}

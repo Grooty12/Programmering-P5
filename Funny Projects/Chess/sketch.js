@@ -1,8 +1,4 @@
-
 let square = [];
-let line = [];
-let row = [];
-let row1 = [];
 let n = 8;
 let size = 800;
 let pawnIMG;

@@ -10,7 +10,7 @@ function setup() {
 
 function draw() {
   background(220);
-  for (let i = 0; i < 10; i++) {
+  for (let i = 0; i < 13; i++) {
     line(x, y + i * 50, x + 50, y + i * 50);
   }
   x += 1;

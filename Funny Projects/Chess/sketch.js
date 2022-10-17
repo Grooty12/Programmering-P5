@@ -1,43 +1,65 @@
 let square = [];
 let n = 8;
 let size = 800;
-let pawnIMG;
-function preload() {
-  pawnIMG = loadImage('assets/White/Pawn.png')
-}
+let Pawn;
+let P;
+
 function setup() {
   createCanvas(size, size);
-  let P = size / n;
+  P = size / n;
+  let color;
+  textAlign(CENTER);
   for (let j = 0; j * P < height; j++) {
     row1 = [];
     for (let i = 0; i * P < width; i++) {
       if (i % 2 == 0) {
         if (j % 2 == 0) {
-          fill(255);
+          color = 255;
         } else {
-          fill(0);
+          color = 0;
         }
       } else {
         if (j % 2 == 1) {
-          fill(255);
+          color = 255;
         } else {
-          fill(0);
+          color = 0;
         }
       }
-      row1.push([j * P + 50, i * P + 50, j + (i * n) + 1]);
+      row1.push([j * P + 50, i * P + 50, j + i * n + 1]);
+      fill(color);
       rect(j * P, i * P, P, P);
+      fill(255 - color);
+      text(j + i * n + 1, j * P + 50, i * P + 50);
     }
     square.push(row1);
   }
-  imageMode(CENTER);
+  noFill;
+  print(square);
+  fill(255);
 }
-function draw() {
-  DrawBricks("pawn", square[3][3])
-}
+function draw() {}
 
 function DrawBricks(type, place) {
   if (type == "pawn") {
-    image(pawnIMG, place[0], place[1], 100, 100);
-    print(place[2])
+    circle(place[0], place[1], 50);
+  }
+}
+
+function mousePressed() {
+  for (let i = 0; i * P < height; i++) {
+    for (let j = 0; j * P < width; j++) {
+      if (
+        mouseX > square[i][j][0] - P / 2 &&
+        mouseX < square[i][j][0] + P / 2
+      ) {
+        if (
+          mouseY > square[i][j][1] - P / 2 &&
+          mouseY < square[i][j][1] + P / 2
+        ) {
+          print(square[i][j][2]);
+          break;
+        }
+      }
+    }
   }
 }

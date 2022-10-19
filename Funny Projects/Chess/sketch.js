@@ -49,7 +49,8 @@ function draw() {
       if (DefineSquares == 0) {
         // I første "frame" defineres felteres x-værdi
         row1.push([j * P + 50, i * P + 50, j + i * n + 1]);
-        squares.push(0);
+        squares.push([0, j * P + 50, i * P + 50]);
+        print(i * P);
       }
       fill(color);
       rect(j * P, i * P, P, P); // tegner firkanterne
@@ -61,12 +62,10 @@ function draw() {
       square.push(row1);
     }
   }
-  if (DefineSquares == 1) {
+  if (DefineSquares == 0) {
     for (let i = 0; i < 8; i++) {
-      let number = i + 6 * n + 1;
-      squares[number] = "Pawn";
-      fill(125);
-      circle(square[i][6][0], square[i][6][1], 50);
+      let number = 6 + i * n;
+      squares[number][0] = ["Pawn"];
     }
   }
   DefineSquares = 1; // Til de ting, som kun skal køre 1 gang, spares for-loops i function setup
@@ -74,6 +73,12 @@ function draw() {
 }
 
 function DrawBricks(brick) {
+  for (let i = 0; i < 64; i++) {
+    if (squares[i][0] == "Pawn") {
+      fill(120);
+      circle(squares[i][1], squares[i][2], 50);
+    }
+  }
   if (brick[0] == "pawn") {
     image(
       pawnIMG,

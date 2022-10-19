@@ -1,4 +1,5 @@
 let square = []; // Det er koordinater til hver firkant.
+let squares = [];
 let n = 8; // Antal firkanter
 let size = 800;
 let P; // Hvor langt der skal være mellem hver firkant
@@ -48,6 +49,7 @@ function draw() {
       if (DefineSquares == 0) {
         // I første "frame" defineres felteres x-værdi
         row1.push([j * P + 50, i * P + 50, j + i * n + 1]);
+        squares.push(0);
       }
       fill(color);
       rect(j * P, i * P, P, P); // tegner firkanterne
@@ -59,6 +61,14 @@ function draw() {
       square.push(row1);
     }
   }
+  if (DefineSquares == 1) {
+    for (let i = 0; i < 8; i++) {
+      let number = i + 6 * n + 1;
+      squares[number] = "Pawn";
+      fill(125);
+      circle(square[i][6][0], square[i][6][1], 50);
+    }
+  }
   DefineSquares = 1; // Til de ting, som kun skal køre 1 gang, spares for-loops i function setup
   DrawBricks(bricks[0]);
 }
@@ -68,9 +78,7 @@ function DrawBricks(brick) {
     image(
       pawnIMG,
       square[brick[1]][brick[2]][0],
-      square[brick[1]][brick[2]][1],
-      180 / 4,
-      247 / 4
+      square[brick[1]][brick[2]][1]
     );
   }
 }

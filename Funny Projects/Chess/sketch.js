@@ -77,13 +77,15 @@ function DrawBricks(brick) {
 
 function mousePressed() {
   for (let i = 0; i * P < height; i++) {
+    // For-loop. Hvor mange felter man er nede
     for (let j = 0; j * P < width; j++) {
+      // For loop. Hvor mange felter man er henne
       if (
-        mouseX > square[i][j][0] - P / 2 &&
+        mouseX > square[i][j][0] - P / 2 && // Tjekker for hver firkants x-værdi for at se hvilken firkant musen er inden for
         mouseX < square[i][j][0] + P / 2
       ) {
         if (
-          mouseY > square[i][j][1] - P / 2 &&
+          mouseY > square[i][j][1] - P / 2 && // Gør Det samme bare nedad med y-værdier
           mouseY < square[i][j][1] + P / 2
         ) {
           print(square[i][j][2], i, j);

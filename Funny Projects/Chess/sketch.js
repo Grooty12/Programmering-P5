@@ -53,13 +53,13 @@ function DefineBricks() {
   // King
   brick[4][0] = 1;
   brick[4][1] = 1;
-  brick[60][0] = 1;
-  brick[60][1] = 0;
+  brick[59][0] = 1;
+  brick[59][1] = 0;
   // Queen
   brick[3][0] = 2;
   brick[3][1] = 1;
-  brick[59][0] = 2;
-  brick[59][1] = 0;
+  brick[60][0] = 2;
+  brick[60][1] = 0;
   for (let i = 0; i < 2; i++) {
     // Rook, Knight and Bishop
     // Rooks
@@ -170,7 +170,6 @@ function mousePressed() {
           BrickIsPressed(
             brick[BrickPressed[1]],
             brick[BrickPressed[1]][0],
-            brick[BrickPressed[1]][1],
             brick[i],
             BrickPressed[1],
             i
@@ -188,12 +187,11 @@ function mousePressed() {
   }
 }
 
-function BrickIsPressed(Bricks, type, color, pressed, i, x) {
+function BrickIsPressed(Bricks, type, pressed, i, x) {
   if (pressed[2] == Bricks[2] && pressed[3] == Bricks[3]) {
     BrickPressed = [];
     DrawBricks();
   } else if (!CheckKills(Bricks, pressed, type, i)) {
-    print(type);
     if (type == 1) {
       // King
       if (
@@ -282,10 +280,10 @@ function BrickIsPressed(Bricks, type, color, pressed, i, x) {
         if (
           (pressed[3] >= Bricks[3] + 100 &&
             pressed[3] <= Bricks[3] + PawnSomething &&
-            color == 1) ||
+            Bricks[1] == 1) ||
           (pressed[3] <= Bricks[3] - 100 &&
             pressed[3] >= Bricks[3] - PawnSomething &&
-            color == 0)
+            Bricks[1] == 0)
         ) {
           BrickIsPressed2(Bricks, pressed, i, x);
         }
@@ -307,8 +305,6 @@ function BrickIsPressed(Bricks, type, color, pressed, i, x) {
 function BrickIsPressed2(Bricks, pressed, i, x) {
   if (pressed[0] > 0) {
     killed[pressed[1]].push(pressed[0]);
-    print(Bricks, pressed);
-    print(pressed[0], pressed[1]);
   }
   brick[x][0] = Bricks[0];
   brick[x][1] = Bricks[1];
@@ -320,6 +316,7 @@ function BrickIsPressed2(Bricks, pressed, i, x) {
 }
 
 function CheckKills(Bricks, pressed, type, i) {
+  print(i);
   if (Bricks[1] == pressed[1]) {
     return true;
   } else if (type == 6) {

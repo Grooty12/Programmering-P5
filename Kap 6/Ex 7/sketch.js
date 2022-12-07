@@ -1,6 +1,14 @@
-let letter, input, button, isCorrect, gameOver, isDead, correct, word, table;
-let wrong = [];
-let pressed = [];
+let letter,
+  input,
+  button,
+  gameOver,
+  isDead,
+  correct,
+  word,
+  table,
+  wrong,
+  pressed,
+  element;
 
 function preload() {
   table = loadTable("assets/words_alpha.txt", "txt");
@@ -9,8 +17,8 @@ function setup() {
   let tableArray = table.getArray();
   do {
     word = random(tableArray)[0].toLowerCase();
-    print(word);
   } while (word.length < 4 || word.length > 8);
+  print(word);
   createCanvas(windowWidth, windowHeight);
   background(220);
   textAlign(CENTER);
@@ -30,6 +38,10 @@ function setup() {
   button = createButton("Submit");
   button.position(input.x + input.width, input.y);
   button.mousePressed(submitWord);
+
+  element = createElement("h2", "Submit a word");
+  element.style("color", color(255, 255));
+  element.position(input.x, input.y - 50);
   correct = 0;
   isDead = 0;
   gameOver = 0;
@@ -77,7 +89,7 @@ function checkIfLetter() {
 }
 
 function checkCorrectLetter() {
-  isCorrect = 0;
+  let isCorrect = 0;
   for (let i = 0; i < word.length; i++) {
     let wordLetter = word[i];
     if (letter == wordLetter) {

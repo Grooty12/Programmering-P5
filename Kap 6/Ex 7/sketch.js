@@ -24,16 +24,16 @@ function setup() {
   textAlign(CENTER);
   textSize(50);
   strokeWeight(5);
-  line(100, 600, 300, 600);
-  line(200, 100, 200, 600);
-  line(200, 100, 600, 100);
-  line(200, 200, 300, 100);
-  line(600, 100, 600, 200);
+  line(350, 600, 550, 600);
+  line(450, 100, 450, 600);
+  line(450, 100, 850, 100);
+  line(450, 200, 550, 100);
+  line(850, 100, 850, 200);
   for (let i = 0; i < word.length; i++) {
-    line(400 + 45 * i, 650, 400 + 45 * i + 30, 650);
+    line(600 + 45 * i, 650, 600 + 45 * i + 30, 650);
   }
   input = createInput();
-  input.position(700, 100);
+  input.position(50, 75);
 
   button = createButton("Submit");
   button.position(input.x + input.width, input.y);
@@ -60,7 +60,7 @@ function keyPressed() {
 }
 
 function drawLetter(i) {
-  text(letter.toUpperCase(), 400 + 45 * i + 15, 630);
+  text(letter.toUpperCase(), 600 + 45 * i + 15, 630);
 }
 function submitWord() {
   if (checkIfAlreadyPressed()) {

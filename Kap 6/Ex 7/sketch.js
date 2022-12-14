@@ -13,6 +13,7 @@ let letter,
 function preload() {
   table = loadTable("assets/words_alpha.txt", "txt");
 }
+
 function setup() {
   let tableArray = table.getArray();
   do {
@@ -74,6 +75,12 @@ function submitWord() {
   input.value("");
 }
 
+function drawWrongLetters() {
+  let letterX;
+  let letterY;
+  text(wrong[wrong.length - 1], 30, 150);
+}
+
 function checkIfLetter() {
   if (letter.length == 1) {
     if (letter.toLowerCase() != letter.toUpperCase()) {
@@ -103,6 +110,7 @@ function checkCorrectLetter() {
     print("Wrong!");
     wrong.push(letter);
     drawMan(wrong.length);
+    drawWrongLetters();
   }
 }
 
@@ -114,36 +122,38 @@ function checkIfAlreadyPressed() {
     }
   }
 }
+
 function checkWon() {
   correct++;
   if (correct == word.length) {
     gameIsOver();
   }
 }
+
 function drawMan(n) {
   // Head
   if (n == 1) {
-    circle(600, 200, 80);
+    circle(850, 200, 80);
   }
   // Body
   if (n == 2) {
-    line(600, 240, 600, 400);
+    line(850, 240, 850, 400);
   }
   // Arm 1
   if (n == 3) {
-    line(600, 270, 500, 180);
+    line(850, 270, 750, 180);
   }
   // Arm 2
   if (n == 4) {
-    line(600, 270, 700, 180);
+    line(850, 270, 950, 180);
   }
   // Leg 1
   if (n == 5) {
-    line(600, 400, 500, 490);
+    line(850, 400, 750, 490);
   }
   // Leg 2
   if (n == 6) {
-    line(600, 400, 700, 490);
+    line(850, 400, 950, 490);
     isDead = 1;
     gameIsOver();
   }
@@ -151,18 +161,18 @@ function drawMan(n) {
 
 function gameIsOver() {
   if (isDead == 1) {
-    text("YOU DIED!", width / 2 + 300, height / 2);
+    text("YOU DIED!", 650, 300);
     textSize(15);
-    text("Word was:", width / 2 + 300, height / 2 + 70);
-    text(word, width / 2 + 300, height / 2 + 85);
+    text("Word was:", 650, 300 + 70);
+    text(word, 650, 300 + 85);
   } else {
-    text("YOU WON!", width / 2 + 300, height / 2);
+    text("YOU WON!", 650, 300);
   }
   textSize(30);
-  text("Press 'ENTER' to reset", width / 2 + 300, height / 2 + 50);
-
+  text("Press 'ENTER' to reset", 650, 300 + 50);
   gameOver = 1;
   input.hide();
   button.hide();
+  element.hide();
   textSize(100);
 }

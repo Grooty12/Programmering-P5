@@ -76,9 +76,9 @@ function submitWord() {
 }
 
 function drawWrongLetters() {
-  let letterX;
+  let letterX = 30 + (wrong.length - 1) * 40;
   let letterY;
-  text(wrong[wrong.length - 1], 30, 150);
+  text(wrong[wrong.length - 1], letterX, 150);
 }
 
 function checkIfLetter() {
@@ -109,8 +109,8 @@ function checkCorrectLetter() {
   if (isCorrect == 0) {
     print("Wrong!");
     wrong.push(letter);
-    drawMan(wrong.length);
     drawWrongLetters();
+    drawMan(wrong.length);
   }
 }
 

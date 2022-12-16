@@ -1,15 +1,27 @@
 let treeTrunk,
   treeLeaves,
   ornament = [],
-  colors = ["Green", "Blue", "Red", "Orange", "Purple", "White"];
+  colors = [
+    "Green",
+    "DarkBlue",
+    "Red",
+    "Orange",
+    "Purple",
+    "LightBlue",
+    "Gold",
+    "Pink",
+  ],
+  test = 0,
+  test2 = [];
 function setup() {
   createCanvas(windowWidth, windowHeight);
   background(220);
+  noStroke();
   treeTrunk = new Trunks();
   treeLeaves = new Leaves();
   treeTrunk.show();
   treeLeaves.show();
-  for (let i = 0; i < 50; i++) {
+  for (let i = 0; i < 10; i++) {
     ornament[i] = new Ornaments();
     ornament[i].show();
   }
@@ -17,6 +29,9 @@ function setup() {
 
 function draw() {}
 
+function mousePressed() {
+  print(isInside(mouseX, mouseY));
+}
 class Trunks {
   constructor() {
     this.color = color(118, 92, 72);
@@ -40,11 +55,9 @@ class Leaves {
     this.x = treeTrunk.x + treeTrunk.w / 2 - this.width / 2;
     this.y = height - treeTrunk.h + 80;
     this.corners = [];
-    print(this.corners);
   }
   show() {
     fill(this.color);
-    print("Test");
     for (let i = 0; i < 5; i++) {
       this.corners[i] = [
         this.x + 50 * i,
@@ -73,7 +86,7 @@ class Ornaments {
     do {
       this.x = random(treeLeaves.corners[0][0], treeLeaves.corners[0][2]);
       this.y = random(treeLeaves.corners[0][1], treeLeaves.corners[4][5]);
-    } while (isInside(this.x, this.y));
+    } while (!isInside(this.x, this.y));
   }
   show() {
     fill(this.color);
@@ -120,14 +133,9 @@ function isInside(x1, y1) {
         y1 * treeLeaves.corners[i][0]) /
         2
     );
-    print(area1, area2, area3, area);
-    let dist = 100000;
-    for (let j = 0; i < ornament.length; i++) {
-      let dist1 = 2;
-    }
-    if (area1 + area2 + area3 == area) {
-      return false;
+    if (area1 + area2 + area3 > area - 1 && area1 + area2 + area3 < area + 1) {
+      return true;
     }
   }
-  return true;
+  return false;
 }

@@ -13,6 +13,7 @@ let treeTrunk,
   ],
   test = 0,
   test2 = [];
+
 function setup() {
   createCanvas(windowWidth, windowHeight);
   background(220);
@@ -21,17 +22,12 @@ function setup() {
   treeLeaves = new Leaves();
   treeTrunk.show();
   treeLeaves.show();
-  for (let i = 0; i < 10; i++) {
+  for (let i = 0; i < 20; i++) {
     ornament[i] = new Ornaments();
     ornament[i].show();
   }
 }
 
-function draw() {}
-
-function mousePressed() {
-  print(isInside(mouseX, mouseY));
-}
 class Trunks {
   constructor() {
     this.color = color(118, 92, 72);
@@ -93,7 +89,6 @@ class Ornaments {
     circle(this.x, this.y, this.r);
   }
 }
-// For at finde, om punkt er inde for trekant, skal man lave trekanter fra punktet til hjørnerne af trekant. De tre trekanter skal være lig med trekantens areal for at punkt er inde i trekant
 
 function isInside(x1, y1) {
   for (let i = 0; i < 5; i++) {

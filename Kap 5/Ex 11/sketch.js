@@ -30,5 +30,3 @@ function draw() {
     circle();
   }
 }
-
-function mousePressed() {}
